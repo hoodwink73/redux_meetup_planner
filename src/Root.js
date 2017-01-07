@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {createStore, applyMiddleware} from 'redux'
-import thunkMiddleware from 'redux-thunk'
+import thunk from 'redux-thunk'
 import {Provider} from 'react-redux'
 import rootReducer from './rootReducer'
 import AppContainer from './AppContainer'
@@ -8,7 +8,7 @@ import AppContainer from './AppContainer'
 
 let store = createStore(rootReducer,
                         undefined,
-                        applyMiddleware(thunkMiddleware)
+                        applyMiddleware(thunk)
                       )
 
 store.subscribe( ()=> { console.log(store.getState())})
