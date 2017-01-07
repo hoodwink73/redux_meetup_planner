@@ -1,0 +1,26 @@
+{
+  "otherEvents": [
+    {
+      "eventName": "Mitch Martin Freedom Festival",
+      "eventDate": "May 31st",
+      "eventTime": "10 pm",
+      "eventType": "house party",
+      "eventHost": "Speaker City",
+      "eventCreator": "Beannie Campbell",
+      "eventLocation": "Mitch Martin House",
+      "eventGuests": "Frank the Tank, Blue",
+      "eventDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus lectus quis tincidunt venenatis. Duis quis finibus sapien. Pellentesque libero tortor, rhoncus aliquam tristique in, lobortis interdum mi. Donec auctor, nibh ut porta rutrum, velit massa egestas mi, rutrum tempus ante leo et eros. Integer lobortis."
+      },
+    {
+      "eventName": "Fantasy Draft 2017",
+      "eventDate": "Aug 18th",
+      "eventTime": "8 pm",
+      "eventType": "fantasy draft oarty",
+      "eventHost": "Vance Refrigeration",
+      "eventCreator": "Bob Vance",
+      "eventLocation": "Chili's",
+      "eventGuests": "Kevin Malone, OScar, Michael Scott",
+      "eventDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus lectus quis tincidunt venenatis. Duis quis finibus sapien. Pellentesque libero tortor, rhoncus aliquam tristique in, lobortis interdum mi. Donec auctor, nibh ut porta rutrum, velit massa egestas mi, rutrum tempus ante leo et eros. Integer lobortis."
+    }
+  ]
+}
