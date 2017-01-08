@@ -41,7 +41,7 @@ class ViewEventsContainer extends Component {
           {
             otherEvents.map( (eventObject) => {
               return (
-                <div className="otherEvent">
+                <div className="otherEvent" key={eventObject.eventName}>
                   <h1>Your New Event </h1>
                   <h3>event name: {eventObject.eventName}</h3>
                   <h3>event date: {eventObject.eventDate}</h3>
