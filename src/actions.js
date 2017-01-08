@@ -40,7 +40,6 @@ const receiveEvents = (fetchedData) => {
 }
 
 export const fetchOtherEvents = () => {
-  console.log("fetch other events action registered")
   return (dispatch) => {
     dispatch(requestEvents())
     return (

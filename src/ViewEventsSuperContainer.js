@@ -5,14 +5,23 @@ import {fetchOtherEvents} from './actions'
 class ViewEventsContainer extends Component {
   constructor(props){
     super(props)
-  }
-  compnonentDidMount(){
-    const {dispatch} = this.props
+    const {dispatch} = props
     dispatch(fetchOtherEvents())
   }
   render(){
-    const {eventName, eventDate, eventTime, eventType, eventHost, eventCreator, eventLocation, eventGuests, eventDescription} = this.props
-    const {otherEvents} = this.props
+    const {
+      eventName,
+      eventDate,
+      eventTime,
+      eventType,
+      eventHost,
+      eventCreator,
+      eventLocation,
+      eventGuests,
+      eventDescription,
+      otherEvents
+    } = this.props
+
     return (
       <div>
         <div className="featuredEvent">
@@ -43,7 +52,7 @@ class ViewEventsContainer extends Component {
                   <h5>event creator: {eventObject.eventCreator}</h5>
                   <h5>event location:{eventObject.eventLocation}</h5>
                   <h5>event guests: {eventObject.eventGuests}</h5>
-                  <h5>event description: {eventDescription}</h5>
+                  <h5>event description: {eventObject.eventDescription}</h5>
                 </div>
               )
             })
