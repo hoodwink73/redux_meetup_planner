@@ -40,15 +40,17 @@ const receiveEvents = (fetchedData) => {
 }
 
 export const fetchOtherEvents = () => {
-  console.log("fetch other events action registered")
   return (dispatch) => {
     dispatch(requestEvents())
     return (
       axios.get('./otherEvents.json')
-                .then( data => {
-                  let otherEvents = data.otherEvents
-                  dispatch(receiveEvents(otherEvents))
-                })
+        .then(
+          res => (
+            dispatch(
+              receiveEvents(res.data.otherEvents)
+            )
+          )
+        )
     )
   }
 }
