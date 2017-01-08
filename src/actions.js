@@ -44,10 +44,13 @@ export const fetchOtherEvents = () => {
     dispatch(requestEvents())
     return (
       axios.get('./otherEvents.json')
-                .then( data => {
-                  let otherEvents = data.otherEvents
-                  dispatch(receiveEvents(otherEvents))
-                })
+        .then(
+          res => (
+            dispatch(
+              receiveEvents(res.data.otherEvents)
+            )
+          )
+        )
     )
   }
 }
