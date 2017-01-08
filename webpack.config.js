@@ -8,6 +8,9 @@ module.exports = {
   devServer: {
     inline: true,
     contentBase: './src',
+    historyApiFallback: {
+      index: 'index.html'
+    },
     port: 3333
   },
   module: {
