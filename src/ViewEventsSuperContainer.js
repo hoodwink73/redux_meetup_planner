@@ -6,7 +6,7 @@ class ViewEventsContainer extends Component {
   constructor(props){
     super(props)
   }
-  compnonentDidMount(){
+  componentDidMount(){
     const {dispatch} = this.props
     dispatch(fetchOtherEvents())
   }
