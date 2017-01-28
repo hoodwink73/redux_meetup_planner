@@ -114,14 +114,11 @@ class EventFormContainer extends Component {
             <input type="text" id="eventHost"
                                onChange={this.onHostChange}
                                /> <br/>
-
-            <label htmlFor="eventLocation">Location: </label> <br/>
-            <input type="text" id="eventLocation"
-                               onChange={this.onLocationChange}
-                               /> <br/>
              <div>
                <Geosuggest
                    placeholder="what is the location of your event?"
+                   label="Event Location:"
+                   id="eventLocation"
                    onSuggestSelect={this.onSuggestSelect}
                    onSuggestNoResults={this.onSuggestNoResults}
                    onChange={this.onGeosuggestChange}
