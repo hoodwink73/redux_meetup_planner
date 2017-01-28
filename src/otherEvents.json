@@ -8,7 +8,7 @@
       "eventHost": "Speaker City",
       "eventCreator": "Beannie Campbell",
       "eventLocation": "Mitch Martin House",
-      "eventGuests": "Frank the Tank, Blue",
+      "eventGuests": ["Frank the Tank", "Blue"],
       "eventDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus lectus quis tincidunt venenatis. Duis quis finibus sapien. Pellentesque libero tortor, rhoncus aliquam tristique in, lobortis interdum mi. Donec auctor, nibh ut porta rutrum, velit massa egestas mi, rutrum tempus ante leo et eros. Integer lobortis."
       },
     {
@@ -19,7 +19,7 @@
       "eventHost": "Vance Refrigeration",
       "eventCreator": "Bob Vance",
       "eventLocation": "Chili's",
-      "eventGuests": "Kevin Malone, OScar, Michael Scott",
+      "eventGuests": ["Kevin Malone", "Oscar", "Michael Scott"],
       "eventDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus lectus quis tincidunt venenatis. Duis quis finibus sapien. Pellentesque libero tortor, rhoncus aliquam tristique in, lobortis interdum mi. Donec auctor, nibh ut porta rutrum, velit massa egestas mi, rutrum tempus ante leo et eros. Integer lobortis."
     }
   ]

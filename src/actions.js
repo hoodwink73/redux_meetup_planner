@@ -10,8 +10,8 @@ export const addUser = (username, email, password) => {
 }
 
 export const addEvent = (    eventName, eventDate, eventTime,
-                             eventType, eventHost, eventCreator,
-                             eventLocation, eventGuests, eventDescription  ) => {
+                             eventType, eventHost, eventLocation,
+                             eventGuests, eventDescription  ) => {
   return {
     type: 'ADD_EVENT',
     eventName,
@@ -19,7 +19,6 @@ export const addEvent = (    eventName, eventDate, eventTime,
     eventTime,
     eventType,
     eventHost,
-    eventCreator,
     eventLocation,
     eventGuests,
     eventDescription
