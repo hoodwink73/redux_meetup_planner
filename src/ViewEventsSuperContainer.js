@@ -25,16 +25,18 @@ class ViewEventsContainer extends Component {
     return (
       <div>
         <div className="featuredEvent">
-          <h1>Your New Event </h1>
+
           <h3>event name: {eventName}</h3>
-          <h3>event date: {eventDate}</h3>
-          <h5>event time: {eventTime}</h5>
-          <h5>event type: {eventType}</h5>
-          <h5>event host: {eventHost}</h5>
-          <h5>event time: {eventTime}</h5>
-          <h5>event creator: {eventCreator}</h5>
-          <h5>event location:{eventLocation}</h5>
-          <h5>event guests: </h5>
+          <h5>date: {eventDate}</h5>
+          <h5>time: {eventTime}</h5>
+          <h5>type: {eventType}</h5>
+          <h5>host: {eventHost}</h5>
+          <h5>time: {eventTime}</h5>
+          <h5>creator: {eventCreator}</h5>
+          <h5>location:</h5>
+          <h4> {eventLocation.label}</h4>
+          <h4> {eventLocation.gmaps.formatted_address}</h4>
+          <h5>guests: </h5>
             <ul>
               {eventGuests.map( guest =>
                 <li key={guest}>{guest}</li>
@@ -94,37 +96,12 @@ const mapStateToViewEventsContainerProps = (state) => {
     }
   }
 
-ViewEventsContainer.PropTypes = {
-    dispatch: PropTypes.func.isRequired,
-    eventName: PropTypes.string.isRequired,
-    eventDate: PropTypes.string.isRequired,
-    eventTime: PropTypes.string,
-    eventType: PropTypes.string,
-    eventHost: PropTypes.string,
-    eventCreator: PropTypes.string,
-    eventLocation: PropTypes.string.isRequired,
-    eventGuests: PropTypes.array,
-    eventDescription: PropTypes.string,
-    isFetching: PropTypes.bool.isRequired,
-    otherEvents: PropTypes.arrayOf(PropTypes.shape({
-      eventName: PropTypes.string.isRequired,
-      eventDate: PropTypes.string.isRequired,
-      eventTime: PropTypes.string,
-      eventType: PropTypes.string,
-      eventHost: PropTypes.string,
-      eventCreator: PropTypes.string,
-      eventLocation: PropTypes.string.isRequired,
-      eventGuests: PropTypes.array,
-      eventDescription: PropTypes.string
-    })).isRequired
-  }
-
 const ViewEventsSuperContainer = connect(mapStateToViewEventsContainerProps)(ViewEventsContainer)
 
 export default ViewEventsSuperContainer
 
 
-
+/*
 ViewEventsContainer.PropTypes = {
   dispatch: PropTypes.func.isRequired,
   eventName: PropTypes.string.isRequired,
@@ -149,3 +126,4 @@ ViewEventsContainer.PropTypes = {
     eventDescription: PropTypes.string
   })).isRequired
 }
+*/

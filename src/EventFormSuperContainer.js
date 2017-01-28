@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {Link, browserHistory} from 'react-router'
 import {connect} from 'react-redux'
+import Geosuggest from 'react-geosuggest'
 import {addEvent} from './actions'
 
 class EventFormContainer extends Component {
@@ -12,7 +13,7 @@ class EventFormContainer extends Component {
       eventTime: '',
       eventType: '',
       eventHost: '',
-      eventLocation: '',
+      eventLocation: {},
       eventGuest: '',
       eventGuests: [],
       eventDescription: ''
@@ -22,12 +23,13 @@ class EventFormContainer extends Component {
     this.onTimeChange = this.onTimeChange.bind(this)
     this.onTypeChange = this.onTypeChange.bind(this)
     this.onHostChange = this.onHostChange.bind(this)
-    this.onLocationChange = this.onLocationChange.bind(this)
     this.onGuestChange = this.onGuestChange.bind(this)
     this.onDescriptionChange = this.onDescriptionChange.bind(this)
     this.onSubmitEvent = this.onSubmitEvent.bind(this)
     this.addGuest = this.addGuest.bind(this)
     this.deleteGuest = this.deleteGuest.bind(this)
+    this.onSuggestSelect = this.onSuggestSelect.bind(this)
+    this.onSuggestNoResults = this.onSuggestNoResults.bind(this)
   }
 
   onNameChange(synthEvent){
@@ -44,9 +46,6 @@ class EventFormContainer extends Component {
   }
   onHostChange(synthEvent){
     this.setState({eventHost: synthEvent.target.value})
-  }
-  onLocationChange(synthEvent){
-    this.setState({eventLocation: synthEvent.target.value})
   }
   onGuestChange(synthEvent){
     this.setState({eventGuest: synthEvent.target.value})
@@ -79,9 +78,16 @@ class EventFormContainer extends Component {
     guests.splice(guestIndex, 1)
     this.setState({eventGuests: guests})
   }
+  onSuggestSelect(suggest) {
+    //console.log(suggest)
+    this.setState({eventLocation: suggest})
+  }
+  onSuggestNoResults(userInput){
+    console.log("onSuggestNoResults for: ", userInput)
+  }
   render(){
     return (
-      <div>
+      <div className="eventForm">
         Tell us about your event...
         <form>
             <label htmlFor="eventName">Event Name: </label> <br/>
@@ -113,13 +119,22 @@ class EventFormContainer extends Component {
             <input type="text" id="eventLocation"
                                onChange={this.onLocationChange}
                                /> <br/>
+             <div>
+               <Geosuggest
+                   placeholder="what is the location of your event?"
+                   onSuggestSelect={this.onSuggestSelect}
+                   onSuggestNoResults={this.onSuggestNoResults}
+                   onChange={this.onGeosuggestChange}
+                   />
+             </div>
 
             <label htmlFor="eventGuest">Guests: </label> <br/>
             <input type="text" id="eventGuest"
                                ref={ node => this.guestFieldNode = node}
                                onChange={this.onGuestChange}
+                               style={{width: '70%'}}
                                />
-            <button onClick={this.addGuest}>Add Guest</button><br/>
+            <button onClick={this.addGuest} style={{width: '20%'}}>Add Guest</button><br/>
 
             <div>
                 <ul>

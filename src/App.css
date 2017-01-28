@@ -1,9 +1,24 @@
+.eventForm {
+  width: 50%;
+  margin: 1em, auto;
+}
+input {
+  width: 100%;
+  border: 2px solid transparent;
+  box-shadow: 0 0 1px #3d464d;
+  padding: .5em 1em;
+  -webkit-transition: border 0.2s, box-shadow 0.2s;
+          transition: border 0.2s, box-shadow 0.2s;
+}
+inpit: focus {
+  border-color: #267dc0;
+  box-shadow: 0 0 0 transparent;
+}
 
 .geosuggest {
   font-size: 18px;
   font-size: 1rem;
   position: relative;
-  width: 50%;
   margin: 1em auto;
   text-align: left;
 }
