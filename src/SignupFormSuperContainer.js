@@ -5,6 +5,11 @@ import {addUser} from './actions'
 import patterns from './regExPatterns'
 import PasswordOneCriteria from './PasswordOneCriteria'
 import PasswordTwoCriteria from './PasswordTwoCriteria'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import RaisedButton from 'material-ui/RaisedButton'
+import TextField from 'material-ui/TextField'
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card'
+
 
 class SignupFormContainer extends Component {
   constructor(props){
@@ -128,50 +133,63 @@ class SignupFormContainer extends Component {
 
   render(){
     const { dispatch } = this.props
+    const textFieldStyle = { width: '80%', margin: 'auto'}
+    const buttonStyle = { marginTop: '20px'}
     return (
       <div>
-        Signup <br/><br/>
-        <form>
-          <label htmlFor="name">Name: </label> <br/>
-          <input type="text" id="name"
-                             required="true"
-                             onChange={this.onNameChange}/> <br/>
+        <MuiThemeProvider>
+          <div>
+          <Card style={{padding: "5%", width: '50%', margin: '70px auto'}}>
+          <CardTitle title="Get Started" subtitle="first, let's create a profile" />
+            <TextField
+              style={textFieldStyle}
+              floatingLabelText="Name"
+              type="text"
+              onChange={this.onNameChange}
+              value={this.state.username}
+            /><br/>
+            <TextField
+              style={textFieldStyle}
+              floatingLabelText="E-mail Address"
+              type="email"
+              onChange={this.onEmailChange}
+              value={this.state.email}
+            /><br/>
+            <TextField
+              style={textFieldStyle}
+              floatingLabelText="Create password"
+              type="password"
+              onChange={this.onPasswordOneChange}
+              value={this.state.passwordOne}
+              onFocus={this.onPasswordOneFocus}
+            /><br/>
+            <PasswordOneCriteria dirty={this.state.passwordOneDirty}
+                                 lower={this.state.validities.passwordOneLower}
+                                 upper={this.state.validities.passwordOneUpper}
+                                 number={this.state.validities.passwordOneNumber}
+                                 specialChar={this.state.validities.passwordOneSpecialChar}
+                                 length={this.state.validities.passwordOneLength}
+                                 />
+            <TextField
+              style={textFieldStyle}
+              floatingLabelText="Confirm password"
+              type="password"
+              onChange={this.onPasswordTwoChange}
+              onFocus={this.onPasswordTwoFocus}
+              value={this.state.passwordTwo}
+            /><br/>
+            <PasswordTwoCriteria dirty={this.state.passwordTwoDirty}
+                                 match={this.state.validities.passwordTwoMatch}
+                                 />
+            <RaisedButton onClick={this.onSubmitUser}
+                          disabled={this.buttonValidity(this.state.validities)}
+                          label="Sign-Up"
+                          style={buttonStyle}
+            />
+          </Card>
+          </div>
+          </MuiThemeProvider>
 
-          <label htmlFor="email">Email Address: </label><br/>
-          <input type="email" id="email"
-                              required="true"
-                              onChange={this.onEmailChange}/><br/>
-
-          <label htmlFor="passwordOne">Create Password:</label><br/>
-          <input type="password" id="passwordOne"
-                                 onChange={this.onPasswordOneChange}
-                                 onFocus={this.onPasswordOneFocus}
-                                 /><br/>
-
-          <PasswordOneCriteria dirty={this.state.passwordOneDirty}
-                               lower={this.state.validities.passwordOneLower}
-                               upper={this.state.validities.passwordOneUpper}
-                               number={this.state.validities.passwordOneNumber}
-                               specialChar={this.state.validities.passwordOneSpecialChar}
-                               length={this.state.validities.passwordOneLength}
-                               />
-
-         <label htmlFor="passwordTwo">Confirm Password:</label><br/>
-         <input type="password" id="passwordTwo"
-                               onChange={this.onPasswordTwoChange}
-                               onFocus={this.onPasswordTwoFocus}
-                               /><br/>
-
-         <PasswordTwoCriteria dirty={this.state.passwordTwoDirty}
-                              match={this.state.validities.passwordTwoMatch}
-                              />
-
-        <button onClick={this.onSubmitUser}
-                disabled={this.buttonValidity(this.state.validities)}>
-           Sign-Up
-        </button>
-
-    </form>
   </div>
     )
   }
@@ -206,4 +224,36 @@ const SignupFormSuperContainer = connect()(SignupFormContainer)
   Sign Up
 </button>
 </Link>
+
+
+
+          <label htmlFor="passwordOne">Create Password:</label><br/>
+          <input type="password" id="passwordOne"
+                                 onChange={this.onPasswordOneChange}
+                                 onFocus={this.onPasswordOneFocus}
+                                 /><br/>
+
+          <PasswordOneCriteria dirty={this.state.passwordOneDirty}
+                               lower={this.state.validities.passwordOneLower}
+                               upper={this.state.validities.passwordOneUpper}
+                               number={this.state.validities.passwordOneNumber}
+                               specialChar={this.state.validities.passwordOneSpecialChar}
+                               length={this.state.validities.passwordOneLength}
+                               />
+
+         <label htmlFor="passwordTwo">Confirm Password:</label><br/>
+         <input type="password" id="passwordTwo"
+                               onChange={this.onPasswordTwoChange}
+                               onFocus={this.onPasswordTwoFocus}
+                               /><br/>
+
+         <PasswordTwoCriteria dirty={this.state.passwordTwoDirty}
+                              match={this.state.validities.passwordTwoMatch}
+                              />
+
+        <button onClick={this.onSubmitUser}
+                disabled={this.buttonValidity(this.state.validities)}>
+           Sign-Up
+        </button>
+
 */

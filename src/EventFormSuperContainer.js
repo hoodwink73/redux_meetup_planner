@@ -3,6 +3,12 @@ import {Link, browserHistory} from 'react-router'
 import {connect} from 'react-redux'
 import Geosuggest from 'react-geosuggest'
 import {addEvent} from './actions'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import RaisedButton from 'material-ui/RaisedButton'
+import TextField from 'material-ui/TextField'
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card'
+import DatePicker from 'material-ui/DatePicker'
+import TimePicker from 'material-ui/TimePicker'
 
 class EventFormContainer extends Component {
   constructor(props){
@@ -86,78 +92,59 @@ class EventFormContainer extends Component {
     console.log("onSuggestNoResults for: ", userInput)
   }
   render(){
+    const textFieldStyle = { width: '80%', margin: 'auto'}
+    const buttonStyle = { marginTop: '20px'}
+
     return (
-      <div className="eventForm">
-        Tell us about your event...
-        <form>
-            <label htmlFor="eventName">Event Name: </label> <br/>
-            <input type="text" id="eventName"
-                               onChange={this.onNameChange}
-                               /> <br/>
-
-            <label htmlFor="eventDate">Date: </label> <br/>
-            <input type="date" id="eventDate"
-                               onChange={this.onDateChange}
-                               /> <br/>
-
-            <label htmlFor="eventTime">Time: </label> <br/>
-            <input type="time" id="eventTime"
-                               onChange={this.onTimeChange}
-                               /> <br/>
-
-            <label htmlFor="eventType">Event Type: </label> <br/>
-            <input type="text" id="eventType"
-                               onChange={this.onTypeChange}
-                               /> <br/>
-
-            <label htmlFor="eventHost">Event Host: </label> <br/>
-            <input type="text" id="eventHost"
-                               onChange={this.onHostChange}
-                               /> <br/>
-             <div>
-               <Geosuggest
-                   placeholder="what is the location of your event?"
-                   label="Event Location:"
-                   id="eventLocation"
-                   onSuggestSelect={this.onSuggestSelect}
-                   onSuggestNoResults={this.onSuggestNoResults}
-                   onChange={this.onGeosuggestChange}
-                   />
-             </div>
-
-            <label htmlFor="eventGuest">Guests: </label> <br/>
-            <input type="text" id="eventGuest"
-                               ref={ node => this.guestFieldNode = node}
-                               onChange={this.onGuestChange}
-                               style={{width: '70%'}}
-                               />
-            <button onClick={this.addGuest} style={{width: '20%'}}>Add Guest</button><br/>
-
+    <div>
+      <MuiThemeProvider>
+        <div>
+          <Card style={{padding: "5%", width: '50%', margin: '70px auto'}}>
+            <CardTitle title="Create your event"/>
+            <TextField
+              style={textFieldStyle}
+              floatingLabelText="Event name"
+              type="text"
+              onChange={this.onNameChange}
+            />
+            <DatePicker
+              hintText="Event date"
+              onChange={this.onDateChange}
+              mode="landscape"
+              textFieldStyle={textFieldStyle}
+            />
+            <TimePicker
+              hintText="Event time"
+              onChange={this.onTimeChange}
+              textFieldStyle={textFieldStyle}
+            />
+            <TextField
+              style={textFieldStyle}
+              floatingLabelText="Event type"
+              type="text"
+              onChange={this.onTypeChange}
+            />
+            <TextField
+              style={textFieldStyle}
+              floatingLabelText="Event host"
+              type="text"
+              onChange={this.onHostChange}
+            />
             <div>
-                <ul>
-                  { this.state.eventGuests.map( (guest, index) =>
-                      <li key={guest}>
-                        {guest}
-                        <span onClick={ () => this.deleteGuest(index) }>
-                          &emsp; x
-                        </span>
-                      </li>
-                    )
-                  }
-                </ul>
+              <Geosuggest
+                  placeholder="what is the location of your event?"
+                  label="Event Location:"
+                  id="eventLocation"
+                  onSuggestSelect={this.onSuggestSelect}
+                  onSuggestNoResults={this.onSuggestNoResults}
+                  onChange={this.onGeosuggestChange}
+                  />
             </div>
 
-            <label htmlFor="eventDescription">Description: </label> <br/>
-            <input type="text" id="eventDescription"
-                               onChange={this.onDescriptionChange}
-                               /> <br/>
-
-            <button onClick={this.onSubmitEvent}
-                    disabled={false}>
-                Submit Event
-            </button>
-        </form>
-      </div>
+          </Card>
+        </div>
+      </MuiThemeProvider>
+    </div>
     )
   }
 }
@@ -169,3 +156,77 @@ EventFormContainer.PropTypes = {
 const EventFormSuperContainer = connect()(EventFormContainer)
 
 export default EventFormSuperContainer
+
+/*
+<div className="eventForm">
+  Tell us about your event...
+  <form>
+      <label htmlFor="eventName">Event Name: </label> <br/>
+      <input type="text" id="eventName"
+                         onChange={this.onNameChange}
+                         /> <br/>
+
+      <label htmlFor="eventDate">Date: </label> <br/>
+      <input type="date" id="eventDate"
+                         onChange={this.onDateChange}
+                         /> <br/>
+
+      <label htmlFor="eventTime">Time: </label> <br/>
+      <input type="time" id="eventTime"
+                         onChange={this.onTimeChange}
+                         /> <br/>
+
+      <label htmlFor="eventType">Event Type: </label> <br/>
+      <input type="text" id="eventType"
+                         onChange={this.onTypeChange}
+                         /> <br/>
+
+      <label htmlFor="eventHost">Event Host: </label> <br/>
+      <input type="text" id="eventHost"
+                         onChange={this.onHostChange}
+                         /> <br/>
+       <div>
+         <Geosuggest
+             placeholder="what is the location of your event?"
+             label="Event Location:"
+             id="eventLocation"
+             onSuggestSelect={this.onSuggestSelect}
+             onSuggestNoResults={this.onSuggestNoResults}
+             onChange={this.onGeosuggestChange}
+             />
+       </div>
+
+      <label htmlFor="eventGuest">Guests: </label> <br/>
+      <input type="text" id="eventGuest"
+                         ref={ node => this.guestFieldNode = node}
+                         onChange={this.onGuestChange}
+                         style={{width: '70%'}}
+                         />
+      <button onClick={this.addGuest} style={{width: '20%'}}>Add Guest</button><br/>
+
+      <div>
+          <ul>
+            { this.state.eventGuests.map( (guest, index) =>
+                <li key={guest}>
+                  {guest}
+                  <span onClick={ () => this.deleteGuest(index) }>
+                    &emsp; x
+                  </span>
+                </li>
+              )
+            }
+          </ul>
+      </div>
+
+      <label htmlFor="eventDescription">Description: </label> <br/>
+      <input type="text" id="eventDescription"
+                         onChange={this.onDescriptionChange}
+                         /> <br/>
+
+      <button onClick={this.onSubmitEvent}
+              disabled={false}>
+          Submit Event
+      </button>
+  </form>
+</div>
+*/
