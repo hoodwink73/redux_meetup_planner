@@ -1,14 +1,17 @@
 import React, {Component, PropTypes} from 'react'
 import {Link, browserHistory} from 'react-router'
 import {connect} from 'react-redux'
-import {addUser} from './actions'
-import patterns from './regExPatterns'
+// custom imports
+import {addUser} from '../actions'
+import patterns from '../utilities/regExPatterns'
 import PasswordOneCriteria from './PasswordOneCriteria'
 import PasswordTwoCriteria from './PasswordTwoCriteria'
+// MUI imports
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card'
+import Divider from 'material-ui/Divider'
+import {Card, CardHeader, CardTitle} from 'material-ui/Card'
 
 
 class SignupFormContainer extends Component {
@@ -30,17 +33,21 @@ class SignupFormContainer extends Component {
         passwordTwoMatch: false
       },
       passwordOneDirty: false,
-      passwordTwoDirty: false
+      passwordTwoDirty: false,
+      nameDirty: false,
+      emailDirty: false
     }
 
     this.onSubmitUser = this.onSubmitUser.bind(this)
     this.onNameChange = this.onNameChange.bind(this)
+      this.onNameBlur = this.onNameBlur.bind(this)
     this.onEmailChange = this.onEmailChange.bind(this)
+      this.onEmailBlur = this.onEmailBlur.bind(this)
     this.onPasswordOneChange = this.onPasswordOneChange.bind(this)
+      this.onPasswordOneFocus = this.onPasswordOneFocus.bind(this)
     this.onPasswordTwoChange = this.onPasswordTwoChange.bind(this)
-    this.onPasswordOneFocus = this.onPasswordOneFocus.bind(this)
-    this.onPasswordTwoFocus = this.onPasswordTwoFocus.bind(this)
-    this.buttonValidity - this.buttonValidity.bind(this)
+      this.onPasswordTwoFocus = this.onPasswordTwoFocus.bind(this)
+    this.buttonValidity = this.buttonValidity.bind(this)
   }
 
   onSubmitUser(synthEvent){
@@ -54,13 +61,15 @@ class SignupFormContainer extends Component {
   }
 
   onNameChange(synthEvent){
-    synthEvent.target.checkValidity() ?
-      this.setState({ username: synthEvent.target.value,
-                      validities: {...this.state.validities, name: true}
-                    }) :
-      this.setState({ username: synthEvent.target.value,
-                      validities: {...this.state.validities, name: false}
-                    })
+    this.setState({username: synthEvent.target.value})
+  } onNameBlur(synthEvent){
+      synthEvent.target.checkValidity() ?
+        this.setState({ validities: {...this.state.validities, name: true},
+                        nameDirty: true
+                      }) :
+        this.setState({ validities: {...this.state.validities, name: false},
+                        nameDirty: true
+                      })
   }
 
   onEmailChange(synthEvent){
@@ -71,6 +80,8 @@ class SignupFormContainer extends Component {
       this.setState({ email: synthEvent.target.value,
                       validities: {...this.state.validities, email: false}
                     })
+  } onEmailBlur(){
+      this.setState({emailDirty: true})
   }
 
   onPasswordOneChange(synthEvent){
@@ -82,9 +93,8 @@ class SignupFormContainer extends Component {
       passwordOneSpecialChar: false,
       passwordOneLength: false
     }
-    // this block of code behaves irregularly if handle password validities within the component state
+    // the following block of code behaves irregularly if handle password validities within the component state
     // as opposed to sotring in a local, intermediate object
-
     patterns.lowercase.test(password) ? passwordValidities.passwordOneLower = true :
             passwordValidities.passwordOneLower = false
     patterns.uppercase.test(password) ? passwordValidities.passwordOneUpper = true :
@@ -99,7 +109,9 @@ class SignupFormContainer extends Component {
     this.setState({ passwordOne: password,
                     validities: {...this.state.validities, ...passwordValidities}
                   })
-  }
+  } onPasswordOneFocus(){
+      this.setState({passwordOneDirty: true})
+    }
 
   onPasswordTwoChange(synthEvent){
     let password = synthEvent.target.value
@@ -110,13 +122,7 @@ class SignupFormContainer extends Component {
               this.setState({ passwordTwo: password,
                               validities: {...this.state.validities, passwordTwoMatch: false}
                             })
-  }
-
-  onPasswordOneFocus(){
-    this.setState({passwordOneDirty: true})
-  }
-
-  onPasswordTwoFocus(){
+  } onPasswordTwoFocus(){
     this.setState({passwordTwoDirty: true})
   }
 
@@ -128,7 +134,6 @@ class SignupFormContainer extends Component {
       }
     }
     return !overallValidity
-
   }
 
   render(){
@@ -141,20 +146,31 @@ class SignupFormContainer extends Component {
           <div>
           <Card style={{padding: "5%", width: '50%', margin: '70px auto'}}>
           <CardTitle title="Get Started" subtitle="first, let's create a profile" />
+{/*User name*/}
             <TextField
               style={textFieldStyle}
               floatingLabelText="Name"
               type="text"
+              required="true"
               onChange={this.onNameChange}
+              onBlur={this.onNameBlur}
               value={this.state.username}
+              errorText={ !this.state.validities.name && this.state.nameDirty ?
+                          'Please enter your name' : '' }
             /><br/>
+{/*User email*/}
             <TextField
               style={textFieldStyle}
               floatingLabelText="E-mail Address"
               type="email"
+              required="true"
               onChange={this.onEmailChange}
+              onBlur={this.onEmailBlur}
               value={this.state.email}
+              errorText= { !this.state.validities.email && this.state.emailDirty ?
+                           'Please enter a valid e-mail address' : ''}
             /><br/>
+{/*User password 1 of 2*/}
             <TextField
               style={textFieldStyle}
               floatingLabelText="Create password"
@@ -163,6 +179,7 @@ class SignupFormContainer extends Component {
               value={this.state.passwordOne}
               onFocus={this.onPasswordOneFocus}
             /><br/>
+    {/*Dynamic Password Hinting*/}
             <PasswordOneCriteria dirty={this.state.passwordOneDirty}
                                  lower={this.state.validities.passwordOneLower}
                                  upper={this.state.validities.passwordOneUpper}
@@ -170,6 +187,7 @@ class SignupFormContainer extends Component {
                                  specialChar={this.state.validities.passwordOneSpecialChar}
                                  length={this.state.validities.passwordOneLength}
                                  />
+{/*User password 2 of 2*/}
             <TextField
               style={textFieldStyle}
               floatingLabelText="Confirm password"
@@ -178,82 +196,28 @@ class SignupFormContainer extends Component {
               onFocus={this.onPasswordTwoFocus}
               value={this.state.passwordTwo}
             /><br/>
+    {/*Password confirmation matching feedback*/}
             <PasswordTwoCriteria dirty={this.state.passwordTwoDirty}
                                  match={this.state.validities.passwordTwoMatch}
                                  />
+{/*Submit Signup Form button*/}
             <RaisedButton onClick={this.onSubmitUser}
                           disabled={this.buttonValidity(this.state.validities)}
                           label="Sign-Up"
                           style={buttonStyle}
             />
           </Card>
-          </div>
-          </MuiThemeProvider>
-
+        </div>
+      </MuiThemeProvider>
   </div>
     )
   }
 }
 
-SignupFormContainer.PropTypes = {
-  dispatch: PropTypes.func.isRequired
+const {func} = PropTypes
+SignupFormContainer.propTypes = {
+  dispatch: func.isRequired
 }
 
 const SignupFormSuperContainer = connect()(SignupFormContainer)
-
 export default SignupFormSuperContainer
-
-/*
-SignupFormContainer.PropTypes = {
-  username: PropTypes.string.isRequired
-}
-
-const mapStateToSignUpProps = (state) => {
-  return {
-    username: state.username
-  }
-}
-
-const SignupFormSuperContainer = connect(mapStateToSignUpProps)(SignupFormContainer)
-const SignupFormSuperContainer = connect()(SignupFormContainer)
-
-<Link to="/eventForm">
-  <button disabled={  this.buttonValidity(this.state.validities) }
-          onClick={this.onSubmitUser}
-          >
-  Sign Up
-</button>
-</Link>
-
-
-
-          <label htmlFor="passwordOne">Create Password:</label><br/>
-          <input type="password" id="passwordOne"
-                                 onChange={this.onPasswordOneChange}
-                                 onFocus={this.onPasswordOneFocus}
-                                 /><br/>
-
-          <PasswordOneCriteria dirty={this.state.passwordOneDirty}
-                               lower={this.state.validities.passwordOneLower}
-                               upper={this.state.validities.passwordOneUpper}
-                               number={this.state.validities.passwordOneNumber}
-                               specialChar={this.state.validities.passwordOneSpecialChar}
-                               length={this.state.validities.passwordOneLength}
-                               />
-
-         <label htmlFor="passwordTwo">Confirm Password:</label><br/>
-         <input type="password" id="passwordTwo"
-                               onChange={this.onPasswordTwoChange}
-                               onFocus={this.onPasswordTwoFocus}
-                               /><br/>
-
-         <PasswordTwoCriteria dirty={this.state.passwordTwoDirty}
-                              match={this.state.validities.passwordTwoMatch}
-                              />
-
-        <button onClick={this.onSubmitUser}
-                disabled={this.buttonValidity(this.state.validities)}>
-           Sign-Up
-        </button>
-
-*/

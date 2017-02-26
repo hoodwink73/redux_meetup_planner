@@ -1,3 +1,4 @@
+// sandbox component ---- ignore
 import React, {Component} from 'react'
 import Geosuggest from 'react-geosuggest'
 
@@ -5,7 +6,7 @@ export default class PlacesTest extends Component {
   constructor(props){
     super(props)
     this.state ={ }
-    
+
     this.onSuggestSelect = this.onSuggestSelect.bind(this)
     this.onFocus = this.onFocus.bind(this)
     this.onBlur = this.onBlur.bind(this)

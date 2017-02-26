@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {createStore, applyMiddleware, compose} from 'redux'
 import thunk from 'redux-thunk'
 import {Provider} from 'react-redux'
-import rootReducer from './rootReducer'
+import rootReducer from './reducers/rootReducer'
 import AppContainer from './AppContainer'
 
 let composeEnhancers = compose
@@ -18,8 +18,6 @@ if (window.devToolsExtension) {
 
 const middleawares = [thunk]
 
-// there are a lot of ways we can enhance
-// redux devtools, let this be a placeholder
 let enhancers = []
 
 let store = createStore(rootReducer,
@@ -29,10 +27,6 @@ let store = createStore(rootReducer,
                           ...enhancers
                         )
                       )
-
-// we have redux tools now, no need to be ugly
-// store.subscribe( ()=> { console.log(store.getState())})
-
 
 export default class Root extends Component {
   render(){
