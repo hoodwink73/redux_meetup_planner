@@ -22,7 +22,7 @@ const dayAsString = (dayAsNumber) => {
       return 'Saturday'
       break
     default:
-      'no day found'
+      'invalid day provided'
   }
 }
 const monthAsString = (monthAsNumber) => {
@@ -64,7 +64,7 @@ const monthAsString = (monthAsNumber) => {
       return 'December'
       break
     default:
-      'no month found'
+      'invalid month found'
   }
 }
 const hoursFormatted = (hours, minutes) => {
@@ -76,6 +76,7 @@ const hoursFormatted = (hours, minutes) => {
     return `{hours - 11}:${minutes} PM`
   }
 }
+
 const formatDateAndTime = (eventDate, eventTime) => {
     const day = dayAsString(eventDate.getDay())
     const month = monthAsString(eventDate.getMonth())

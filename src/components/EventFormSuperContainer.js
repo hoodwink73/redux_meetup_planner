@@ -38,7 +38,9 @@ class EventFormContainer extends Component {
     this.onNameChange = this.onNameChange.bind(this)
       this.onNameBlur = this.onNameBlur.bind(this)
     this.onDateChange = this.onDateChange.bind(this)
+      this.onDateBlur = this.onDateBlur.bind(this)
     this.onTimeChange = this.onTimeChange.bind(this)
+      this.onTimeBlur = this.onTimeBlur.bind(this)
     this.onTypeChange = this.onTypeChange.bind(this)
       this.onTypeBlur = this.onTypeBlur.bind(this)
     this.onHostChange = this.onHostChange.bind(this)
@@ -65,10 +67,24 @@ class EventFormContainer extends Component {
 
   onDateChange(synthEvent, date){
     this.setState({eventDate: date})
+  } onDateBlur(){
+      this.setState({
+        dirty: {
+          ...this.state.dirty,
+          date: true
+        }
+      })
   }
 
   onTimeChange(synthEvent, time){
     this.setState({eventTime: time})
+  } onTimeBlur(){
+      this.setState({
+        dirty: {
+          ...this.state.dirtry,
+          time: true
+        }
+      })
   }
 
   onTypeChange(synthEvent){
@@ -162,18 +178,28 @@ class EventFormContainer extends Component {
               />
 {/*Event Date*/}
               <DatePicker
+                textFieldStyle={textFieldStyle}
+                floatingLabelText="Event date"
                 hintText="Event date"
                 onChange={this.onDateChange}
+                onDismiss={this.onDateBlur}
+                autoOk={true}
                 value={this.state.eventDate}
                 mode="landscape"
-                textFieldStyle={textFieldStyle}
+                errorText={!this.state.eventDate && this.state.dirty.date ?
+                            'Please select a date for your event' : ''}
               />
 {/*Event Time*/}
               <TimePicker
+                textFieldStyle={textFieldStyle}
+                floatingLabelText="Event time"
                 hintText="Event time"
                 value={this.state.eventDate}
                 onChange={this.onTimeChange}
-                textFieldStyle={textFieldStyle}
+                onDismiss={this.onTimeBlur}
+                autoOk={true}
+                errorText={!this.state.eventTime && this.state.dirty.time ?
+                            'Please select a time for your event' : ''}
               />
 {/*Event Type*/}
               <TextField
@@ -242,7 +268,9 @@ class EventFormContainer extends Component {
             </div>
 {/*Event Description*/}
             <TextField
+              style={textFieldStyle}
               floatingLabelText="Event Description"
+              type="text"
               multiLine={true}
               rowsMax={10}
               onChange={this.onDescriptionChange}
