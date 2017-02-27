@@ -9,7 +9,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 import {List, ListItem} from 'material-ui/List'
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card'
+import Subheader from 'material-ui/Subheader'
+import {Card, CardHeader, CardTitle} from 'material-ui/Card'
 import DatePicker from 'material-ui/DatePicker'
 import TimePicker from 'material-ui/TimePicker'
 import ContentAddCircleOutline from 'material-ui/svg-icons/content/add-circle-outline'
@@ -116,6 +117,7 @@ class EventFormContainer extends Component {
     this.setState({ eventGuest: '' ,
                     eventGuests: [...this.state.eventGuests, eventGuest]
                   })
+    this.guestField.focus()
   } deleteGuest(guestIndex){
     let guests = this.state.eventGuests
     guests.splice(guestIndex, 1)
@@ -214,6 +216,7 @@ class EventFormContainer extends Component {
                 type="text"
                 value={this.state.eventGuest}
                 onChange={this.onGuestChange}
+                ref={ input => this.guestField = input }
               />
               <ContentAddCircleOutline
                     style={ this.state.eventGuest ? {color: 'green'} : {color: 'rgba(0, 0, 0, 0.870588)'}}
@@ -221,6 +224,7 @@ class EventFormContainer extends Component {
     {/*Display Event Guests*/}
               <div>
                 <List style={{width: '80%'}}>
+                  {this.state.eventGuests.length !== 0 ? <Subheader>Your Guest List</Subheader> : ''}
                   {
                     this.state.eventGuests.map( (guest, index) =>
                         <ListItem key={guest}
@@ -240,7 +244,6 @@ class EventFormContainer extends Component {
             <TextField
               floatingLabelText="Event Description"
               multiLine={true}
-              rows={3}
               rowsMax={10}
               onChange={this.onDescriptionChange}
             /><br/>
