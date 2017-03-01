@@ -18,6 +18,7 @@ class OtherEventsSection extends Component {
   }
 
   render(){
+    const otherEvents = this.props.otherEvents
     return(
       <div style={sectionStyle}>
       {

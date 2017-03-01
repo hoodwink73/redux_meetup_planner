@@ -4,6 +4,7 @@ import AppShell from './components/AppShell'
 import SignupFormSuperContainer from './components/SignupFormSuperContainer'
 import EventFormSuperContainer from './components/EventFormSuperContainer'
 import ViewEventsSuperContainer from './components/ViewEventsSuperContainer'
+import './App.css'
 
 export default class AppContainer extends Component {
   render(){
