@@ -6,4 +6,4 @@ const generateRandomColor = (anArrayOfColors) => {
   return anArrayOfColors[randomIndex]
 }
 
-export default generateRandomColor.bind(colorsArray)
+export default generateRandomColor.bind(null, colorsArray)

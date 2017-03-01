@@ -1,3 +1,4 @@
+import React from 'react'
 import generateRandomColor from './generateRandomColor'
 
 const guestItems = (eventGuests) => {

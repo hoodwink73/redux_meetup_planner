@@ -34,19 +34,12 @@ class EventFormContainer extends Component {
       },
       dirty: {name: false, date: false, time: false, type: false, host: false, location: false, guest: false, description: false}
     }
-
-    this.onNameChange = this.onNameChange.bind(this)
-      this.onNameBlur = this.onNameBlur.bind(this)
+    this.onGenericChange = this.onGenericChange.bind(this)
+      this.onGenericBlur = this.onGenericBlur.bind(this)
     this.onDateChange = this.onDateChange.bind(this)
       this.onDateBlur = this.onDateBlur.bind(this)
     this.onTimeChange = this.onTimeChange.bind(this)
       this.onTimeBlur = this.onTimeBlur.bind(this)
-    this.onTypeChange = this.onTypeChange.bind(this)
-      this.onTypeBlur = this.onTypeBlur.bind(this)
-    this.onHostChange = this.onHostChange.bind(this)
-      this.onHostBlur = this.onHostBlur.bind(this)
-    this.onGuestChange = this.onGuestChange.bind(this)
-    this.onDescriptionChange = this.onDescriptionChange.bind(this)
     this.onSubmitEvent = this.onSubmitEvent.bind(this)
     this.addGuest = this.addGuest.bind(this)
       this.deleteGuest = this.deleteGuest.bind(this)
@@ -54,20 +47,24 @@ class EventFormContainer extends Component {
       this.onSuggestNoResults = this.onSuggestNoResults.bind(this)
     this.buttonValidity = this.buttonValidity.bind(this)
   }
-
-  onNameChange(synthEvent){
-    this.setState({eventName: synthEvent.target.value})
-  } onNameBlur(synthEvent){
-      synthEvent.target.value ?
-        this.setState({dirty: {...this.state.dirty, name: true},
-                       validities: {...this.state.validities, name: true}}) :
-        this.setState({dirty: {...this.state.dirty, name: true},
-                      validities: {...this.state.validities, name: false}})
+  onGenericChange(synthEvent, valueKey){
+    this.setState({[valueKey]: synthEvent.target.value})
   }
-
+  onGenericBlur(synthEvent, dirtyKey){
+    synthEvent.target.value ?
+      this.setState({
+        dirty: {...this.state.dirty, [dirtyKey]: true},
+        validities: {...this.state.validities, [dirtyKey]: true}
+      }) :
+      this.setState({
+        dirty: {...this.state.dirty, [dirtyKey]: true},
+        validities: {...this.state.validities, [dirtyKey]: false}
+      })
+  }
   onDateChange(synthEvent, date){
     this.setState({eventDate: date})
-  } onDateBlur(){
+  }
+  onDateBlur(){
       this.setState({
         dirty: {
           ...this.state.dirty,
@@ -75,43 +72,16 @@ class EventFormContainer extends Component {
         }
       })
   }
-
   onTimeChange(synthEvent, time){
     this.setState({eventTime: time})
-  } onTimeBlur(){
+  }
+  onTimeBlur(){
       this.setState({
         dirty: {
           ...this.state.dirtry,
           time: true
         }
       })
-  }
-
-  onTypeChange(synthEvent){
-    this.setState({eventType: synthEvent.target.value})
-  } onTypeBlur(synthEvent){
-      synthEvent.target.value ?
-        this.setState({dirty: {...this.state.dirty, type: true},
-                       validities: {...this.state.validities, type: true}}) :
-        this.setState({dirty: {...this.state.dirty, type: true},
-                      validities: {...this.state.validities, type: false}})
-  }
-
-  onHostChange(synthEvent){
-    this.setState({eventHost: synthEvent.target.value})
-  } onHostBlur(synthEvent){
-      synthEvent.target.value ?
-        this.setState({dirty: {...this.state.dirty, host: true},
-                       validities: {...this.state.validities, host: true}}) :
-        this.setState({dirty: {...this.state.dirty, host: true},
-                      validities: {...this.state.validities, host: false}})
-  }
-
-  onGuestChange(synthEvent){
-    this.setState({eventGuest: synthEvent.target.value})
-  }
-  onDescriptionChange(synthEvent){
-    this.setState({eventDescription: synthEvent.target.value})
   }
   onSubmitEvent(synthEvent){
     synthEvent.preventDefault()
@@ -134,15 +104,16 @@ class EventFormContainer extends Component {
                     eventGuests: [...this.state.eventGuests, eventGuest]
                   })
     this.guestField.focus()
-  } deleteGuest(guestIndex){
+  }
+  deleteGuest(guestIndex){
     let guests = this.state.eventGuests
     guests.splice(guestIndex, 1)
     this.setState({eventGuests: guests})
   }
-
   onSuggestSelect(suggest) {
     this.setState({eventLocation: suggest})
-  }  onSuggestNoResults(userInput){
+  }
+  onSuggestNoResults(userInput){
     console.log("onSuggestNoResults for: ", userInput)
   }
   buttonValidity(validities){
@@ -171,8 +142,8 @@ class EventFormContainer extends Component {
                 floatingLabelText="Event name"
                 type="text"
                 required="true"
-                onChange={this.onNameChange}
-                onBlur={this.onNameBlur}
+                onChange={(synthEvent) => this.onGenericChange(synthEvent, "eventName")}
+                onBlur={(synthEvent) => this.onGenericBlur(synthEvent, "name")}
                 errorText={!this.state.eventName && this.state.dirty.name ?
                             'Please enter an event name' : ''}
               />
@@ -207,8 +178,8 @@ class EventFormContainer extends Component {
                 floatingLabelText="Event type"
                 type="text"
                 required="true"
-                onChange={this.onTypeChange}
-                onBlur={this.onTypeBlur}
+                onChange={(synthEvent) => this.onGenericChange(synthEvent, "eventType")}
+                onBlur={(synthEvent) => this.onGenericBlur(synthEvent, "type")}
                 errorText={!this.state.eventType && this.state.dirty.type ?
                             'Please enter an event type' : ''}
               />
@@ -218,8 +189,8 @@ class EventFormContainer extends Component {
                 floatingLabelText="Event host"
                 type="text"
                 required="true"
-                onChange={this.onHostChange}
-                onBlur={this.onHostBlur}
+                onChange={(synthEvent) => this.onGenericChange(synthEvent, "eventHost")}
+                onBlur={(synthEvent) => this.onGenericBlur(synthEvent, "host")}
                 errorText={!this.state.eventHost && this.state.dirty.host ?
                             'Please enter an event host' : ''}
               />
@@ -241,7 +212,7 @@ class EventFormContainer extends Component {
                 floatingLabelText="Add a Guest"
                 type="text"
                 value={this.state.eventGuest}
-                onChange={this.onGuestChange}
+                onChange={(synthEvent) => this.onGenericChange(synthEvent, "eventGuest")}
                 ref={ input => this.guestField = input }
               />
               <ContentAddCircleOutline
@@ -273,7 +244,7 @@ class EventFormContainer extends Component {
               type="text"
               multiLine={true}
               rowsMax={10}
-              onChange={this.onDescriptionChange}
+              onChange={(synthEvent) => this.onGenericChange(synthEvent, "eventDescription")}
             /><br/>
 {/*Submit Event Button*/}
             <RaisedButton onClick={this.onSubmitEvent}
