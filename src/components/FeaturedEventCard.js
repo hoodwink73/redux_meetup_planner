@@ -18,11 +18,13 @@ class FeaturedEventCard extends Component{
   	this.state = {
       descriptionIsOpen: true,
       guestListIsOpen: false,
-      locationIsOpen: true
+      locationIsOpen: true,
+      eventDateIsOpen: true
     }
     this.toggleDescription = this.toggleDescription.bind(this)
     this.toggleGuestList = this.toggleGuestList.bind(this)
     this.toggleLocation = this.toggleLocation.bind(this)
+    this.toggleEventDate = this.toggleEventDate.bind(this)
   }
   toggleDescription(){
     this.setState({descriptionIsOpen: !this.state.descriptionIsOpen})
@@ -32,6 +34,9 @@ class FeaturedEventCard extends Component{
   }
   toggleLocation(){
     this.state({locationIsOpen: !this.state.locationIsOpen})
+  }
+  toggleEventDate(){
+    this.state({eventDateIsOpen: !this.state.eventDateIsOpen})
   }
   render(){
     const {
@@ -57,6 +62,8 @@ class FeaturedEventCard extends Component{
 {/*Featured Event Date and Time*/}
           <ListItem primaryText={formatDateAndTime(eventDate, eventTime)}
                     leftIcon={<ActionEvent />}
+                    open={this.state.eventDateIsOpen}
+                    onNestedListToggle={this.toggleEventDate}
                     nestedItems={[
                       <ListItem key="1" primaryText={`Event hosted by ${eventHost} (created by ${eventCreator})`}/>
                     ]}/>

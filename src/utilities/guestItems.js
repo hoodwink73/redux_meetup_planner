@@ -1,5 +1,9 @@
 import React from 'react'
+// custom imports
 import generateRandomColor from './generateRandomColor'
+// MUI imports
+import {ListItem} from 'material-ui/List'
+import Avatar from 'material-ui/Avatar'
 
 const guestItems = (eventGuests) => {
   eventGuests.map(guest => {
