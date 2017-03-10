@@ -26,6 +26,7 @@ class FeaturedEventCard extends Component{
     this.toggleLocation = this.toggleLocation.bind(this)
     this.toggleEventDate = this.toggleEventDate.bind(this)
   }
+
   toggleDescription(){
     this.setState({descriptionIsOpen: !this.state.descriptionIsOpen})
   }

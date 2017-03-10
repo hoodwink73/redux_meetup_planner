@@ -2,6 +2,8 @@ import React, {Component, PropTypes} from 'react'
 import {Link, browserHistory} from 'react-router'
 import {connect} from 'react-redux'
 import Geosuggest from 'react-geosuggest'
+import myKey from '../utilities/api_key'
+import axios from 'axios'
 // custom imports
 import {addEvent} from '../actions'
 // MUI imports
@@ -111,7 +113,39 @@ class EventFormContainer extends Component {
     this.setState({eventGuests: guests})
   }
   onSuggestSelect(suggest) {
-    this.setState({eventLocation: suggest})
+    axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${suggest.placeId}&key=${myKey}`)
+          .then( res => {
+            const {result} = res.data
+            this.setState({ eventLocation: result})
+          })
+/*
+    axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${suggest.placeId}&key=${myKey}`)
+            .then( res => {
+                const {result} = res.data
+                this.setState({ eventLocation: result})
+                console.log("Place Details Returned: ", result)
+                return result.photos
+              }
+            ).then( photoObj => {
+                console.log(photoObj)
+                return axios.get(`https://maps.googleapis.com/maps/api/place/photo?maxwidth=4000&photoreference=${photoObj[0].photo_reference}&key=${myKey}`)
+            }).then( photo => (
+                this.setState({ eventLocation: {
+                                  ...this.state.eventLocation, photoUrl: photo // Google HTTP service returns actual image (not url)
+                                }
+                             })
+              )
+            )
+
+//OR
+    // google is available in the global scope (window) but is not accessible here
+    let service = new google.maps.places.PlacesService()//usually pass map instance
+    service.getDetails({placeId: suggest.placeId}, (place, status) => {
+      if (status == google.maps.places.PlacesServiceStatus.OK){
+        this.setState({ eventLocation: place})
+      }
+    })
+*/
   }
   onSuggestNoResults(userInput){
     console.log("onSuggestNoResults for: ", userInput)

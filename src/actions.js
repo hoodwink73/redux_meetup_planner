@@ -24,14 +24,23 @@ export const addEvent = (    eventName, eventDate, eventTime,
     eventDescription
   }
 }
+/*
+const initiateEventAddition = () => {
+  return {
+    type: 'INITIATE_EVENT_ADDITION'
+  }
+}
 
-const requestEvents = ( ) => {
+const receiveEventInfo = ()
+*/
+
+export const requestEvents = ( ) => {
   return {
     type: 'REQUEST_EVENTS'
   }
 }
 
-const receiveEvents = (fetchedData) => {
+export const receiveEvents = (fetchedData) => {
   return {
     type: 'RECEIVE_EVENTS',
     otherEvents: fetchedData

@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
+import axios from 'axios'
 // custom imports
 import {fetchOtherEvents} from '../actions'
 import FeaturedEventCard from './FeaturedEventCard'
@@ -11,7 +12,9 @@ class ViewEventsContainer extends Component {
   constructor(props){
     super(props)
     const {dispatch} = props
+    //axios.get('https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4&key=YOUR_API_KEY')
     dispatch(fetchOtherEvents())
+
   }
   render(){
     const {

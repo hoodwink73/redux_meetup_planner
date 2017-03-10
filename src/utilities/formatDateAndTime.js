@@ -22,7 +22,7 @@ const dayAsString = (dayAsNumber) => {
       return 'Saturday'
       break
     default:
-      'invalid day provided'
+      return 'invalid day provided'
   }
 }
 const monthAsString = (monthAsNumber) => {
@@ -64,7 +64,7 @@ const monthAsString = (monthAsNumber) => {
       return 'December'
       break
     default:
-      'invalid month found'
+      return 'invalid month found'
   }
 }
 const hoursFormatted = (hours, minutes) => {
